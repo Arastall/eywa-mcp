@@ -38,7 +38,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 
 // Handle tool calls
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
+  const { name, arguments: args = {} } = request.params;
 
   try {
     switch (name) {
@@ -95,12 +95,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 });
 
 // Start server
-async function main() {
+export async function startServer() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error('Eywa MCP server running on stdio');
 }
-
-main().catch(console.error);
 
 export { server };
