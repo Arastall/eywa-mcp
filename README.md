@@ -95,30 +95,70 @@ See [docs/MCP-HOTEL-SCHEMA.md](docs/MCP-HOTEL-SCHEMA.md) for the full protocol s
 
 ## 🔌 Supported Integrations
 
+### Channel Managers
+- [x] **HotelRunner** (10,000+ properties in Turkey & MENA)
+  - Room inventory & rates
+  - Reservation retrieval
+  - Note: Direct booking via HotelRunner's "online" channel
+- [ ] SiteMinder
+- [ ] D-EDGE
+- [ ] *More coming...*
+
 ### PMS (Property Management Systems)
 - [ ] Oracle OPERA Cloud
 - [ ] Mews
 - [ ] Cloudbeds
 - [ ] Apaleo
-- [ ] Protel
+- [ ] Protel / EuroProtel
 - [ ] Clock PMS
+- [ ] Elektraweb (Turkey)
 - [ ] *More coming...*
 
-### Channel Managers
-- [ ] HotelRunner
-- [ ] SiteMinder
-- [ ] D-EDGE
-- [ ] *More coming...*
+## 🏨 HotelRunner Integration
+
+Register properties with their HotelRunner credentials:
+
+```typescript
+import { registerHotelRunnerProperty, configureProviders } from 'eywa-mcp';
+
+// Register a property
+registerHotelRunnerProperty({
+  id: 'my-hotel-istanbul',        // Your internal ID
+  hrId: 'HR_PROPERTY_ID',         // HotelRunner property ID
+  token: 'HOTEL_RUNNER_TOKEN',    // API token from HotelRunner panel
+  name: 'Grand Hotel Istanbul',
+  currency: 'TRY',
+  timezone: 'Europe/Istanbul',
+  location: {
+    city: 'Istanbul',
+    country: 'TR',
+    coordinates: { lat: 41.0082, lng: 28.9784 }
+  }
+});
+
+// Configure routing (optional - registered properties auto-route)
+configureProviders({
+  default: 'mock',
+  destinations: {
+    'istanbul': 'hotelrunner',
+    'antalya': 'hotelrunner',
+  }
+});
+```
+
+**API Limits:** 250 requests/day/property, 5 requests/min/property  
+**Caching:** Room inventory cached for 15 minutes
 
 ## 🗺️ Roadmap
 
 - [x] MCP Schema v0.1
-- [ ] Core MCP server (TypeScript)
-- [ ] Mock provider for testing
-- [ ] First PMS integration (Mews)
-- [ ] HotelRunner integration
+- [x] Core MCP server (TypeScript)
+- [x] Mock provider for testing
+- [x] HotelRunner adapter (read-only)
+- [ ] HotelRunner booking via "online" channel
 - [ ] Claude Desktop integration
 - [ ] OpenAI plugin
+- [ ] First PMS integration (Mews)
 - [ ] SDK (Python, Node)
 
 ## 🤝 Contributing
