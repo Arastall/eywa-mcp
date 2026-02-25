@@ -2,7 +2,7 @@
  * hotel/booking tool implementation
  */
 
-import { getMockBooking } from '../providers/mock.js';
+import { getBookingDetails } from '../providers/index.js';
 
 export async function getBooking(args: Record<string, unknown>) {
   const bookingId = args.booking_id as string;
@@ -23,8 +23,9 @@ export async function getBooking(args: Record<string, unknown>) {
     };
   }
 
-  // TODO: Route to actual provider
-  const result = await getMockBooking(bookingId || confirmationNumber);
+  // Route to provider (auto-detect from booking ID format)
+  const propertyId = args.property_id as string | undefined;
+  const result = await getBookingDetails(bookingId || confirmationNumber, propertyId);
 
   return {
     content: [{

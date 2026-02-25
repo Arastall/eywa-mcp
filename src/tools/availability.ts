@@ -2,8 +2,8 @@
  * hotel/availability tool implementation
  */
 
-import type { AvailabilityParams, AvailabilityResult } from '../types.js';
-import { getMockAvailability } from '../providers/mock.js';
+import type { AvailabilityParams } from '../types.js';
+import { availability } from '../providers/index.js';
 
 export async function getAvailability(args: Record<string, unknown>) {
   const params: AvailabilityParams = {
@@ -30,8 +30,8 @@ export async function getAvailability(args: Record<string, unknown>) {
     };
   }
 
-  // TODO: Route to actual provider
-  const result = await getMockAvailability(params);
+  // Route to provider based on property
+  const result = await availability(params);
 
   return {
     content: [{

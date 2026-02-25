@@ -2,8 +2,8 @@
  * hotel/search tool implementation
  */
 
-import type { SearchParams, SearchResult } from '../types.js';
-import { getMockSearchResults } from '../providers/mock.js';
+import type { SearchParams } from '../types.js';
+import { search } from '../providers/index.js';
 
 export async function searchHotels(args: Record<string, unknown>) {
   const params: SearchParams = {
@@ -55,9 +55,8 @@ export async function searchHotels(args: Record<string, unknown>) {
     };
   }
 
-  // TODO: Route to actual provider based on destination
-  // For now, use mock provider
-  const result = await getMockSearchResults(params);
+  // Route to provider based on destination
+  const result = await search(params);
 
   return {
     content: [{

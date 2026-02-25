@@ -2,8 +2,8 @@
  * hotel/book tool implementation
  */
 
-import type { BookingParams, Booking } from '../types.js';
-import { createMockBooking } from '../providers/mock.js';
+import type { BookingParams } from '../types.js';
+import { book } from '../providers/index.js';
 
 export async function createBooking(args: Record<string, unknown>) {
   const guestData = args.guest as Record<string, unknown>;
@@ -61,8 +61,8 @@ export async function createBooking(args: Record<string, unknown>) {
     };
   }
 
-  // TODO: Route to actual provider
-  const result = await createMockBooking(params);
+  // Route to provider based on property
+  const result = await book(params);
 
   return {
     content: [{

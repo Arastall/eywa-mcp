@@ -2,7 +2,7 @@
  * hotel/modify tool implementation
  */
 
-import { modifyMockBooking } from '../providers/mock.js';
+import { modify } from '../providers/index.js';
 
 export async function modifyBooking(args: Record<string, unknown>) {
   const bookingId = args.booking_id as string;
@@ -30,8 +30,8 @@ export async function modifyBooking(args: Record<string, unknown>) {
     additionalRequests: args.additional_requests as string,
   };
 
-  // TODO: Route to actual provider
-  const result = await modifyMockBooking(bookingId, modifications);
+  // Route to provider
+  const result = await modify(bookingId, modifications);
 
   return {
     content: [{

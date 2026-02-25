@@ -2,7 +2,7 @@
  * hotel/cancel tool implementation
  */
 
-import { cancelMockBooking } from '../providers/mock.js';
+import { cancel } from '../providers/index.js';
 
 export async function cancelBooking(args: Record<string, unknown>) {
   const bookingId = args.booking_id as string;
@@ -23,8 +23,9 @@ export async function cancelBooking(args: Record<string, unknown>) {
     };
   }
 
-  // TODO: Route to actual provider
-  const result = await cancelMockBooking(bookingId, reason);
+  // Route to provider
+  const propertyId = args.property_id as string | undefined;
+  const result = await cancel(bookingId, propertyId, reason);
 
   return {
     content: [{
